@@ -46,6 +46,7 @@
 #define GPIO_DVR			(0x0)
 #define GPIO_DDR			(0x4)
 #define GPIO_D3			(1 << 27)
+#define GPIO_D5                 (1 << 29)
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -60,6 +61,11 @@ int board_init(void)
 {
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
+
+	/* turn on the sys_boot_status_led by default) */
+	setbits_le32(AST_GPIO_BASE + GPIO_DDR, GPIO_D5);
+	clrbits_le32(AST_GPIO_BASE + GPIO_DVR, GPIO_D5);
+
 	return 0;
 }
 
